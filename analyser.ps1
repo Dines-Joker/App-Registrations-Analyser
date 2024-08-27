@@ -7,7 +7,6 @@ $outputFilePath = Read-Host "Geben Sie den Pfad für die Ausgabedatei an"
 $appDetailsList = @()
 
 foreach ($app in $appRegistrations) {
-    # Get certificates and secrets
     $certificates = Get-AzureADApplicationKeyCredential -ObjectId $app.ObjectId
     $secrets = Get-AzureADApplicationPasswordCredential -ObjectId $app.ObjectId
     
