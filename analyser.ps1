@@ -56,7 +56,15 @@ foreach ($app in $appRegistrations) {
     }
 }
 
+# Header für die CSV-Datei
+$header = "AppName,ApplicationID,ObjectID,ReplyURLs,CredentialType,KeyID,EndDate,CreatedOn,Owners,RequiredResources"
 
-$appDetailsList | Export-Csv -Path $outputFilePath -NoTypeInformation -Encoding UTF8
+# Schreiben der CSV-Datei ohne Anführungszeichen
+Out-File -FilePath $outputFilePath -Encoding UTF8 -Force -InputObject $header
+
+foreach ($appDetail in $appDetailsList) {
+    $line = "$($appDetail.AppName),$($appDetail.ApplicationID),$($appDetail.ObjectID),$($appDetail.ReplyURLs),$($appDetail.CredentialType),$($appDetail.KeyID),$($appDetail.EndDate),$($appDetail.CreatedOn),$($appDetail.Owners),$($appDetail.RequiredResources)"
+    Add-Content -Path $outputFilePath -Value $line
+}
 
 Write-Host "Exportiert nach $outputFilePath"
